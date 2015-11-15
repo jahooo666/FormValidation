@@ -1,0 +1,46 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Moja super strona z formularzem i javascriptem</title>
+
+</head>
+<body>
+<form enctype="multipart/form-data" id="form">
+    <h2>Wprowadz swoje dane- u mnie będą bezpieczne </h2>
+    <h4>Imie i nazwisko</h4>
+    <input type="text" id="fullname"/>
+
+    <h4>Login</h4>
+    <input type="text" id="login"/>
+
+    <!--zrobić określanie płci po imieniu -->
+    <div id="passwdbox">
+        <h4>Haslo</h4>
+        <input type="password" id="password"/>
+
+        <h4>Powtórz haslo</h4>
+        <input type="password" id="password-rep"/>
+    </div>
+
+    <h4>Data urodzenia</h4>
+    <input type="date" id="date">
+
+    <h4>PESEL</h4>
+    <input type="text" id="pesel"/>
+
+    <div id="sexBox">
+        <h4>Płeć</h4>
+        <input type="radio" id="sex" name="sex1" value="male"> Mężczyzna
+        <input type="radio" id="sex" name="sex2" value="female"> Kobieta
+    </div>
+    <h4>Zdjęcie</h4>
+    <input type="file" id="photo"/>
+
+
+    <input type="submit" value="Submit">
+
+</form>
+
+<script type="text/javascript" charset="UTF-8" src="validate.js"></script>
+</body>
+</html>
