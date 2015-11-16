@@ -3,41 +3,60 @@
     <meta charset="UTF-8">
     <title>Jan Okraska- formularz</title>
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" href="./style.css" type="text/css">
 </head>
 <body>
-<form enctype="multipart/form-data" name="formularz" id="form" action="http://edi.iem.pw.edu.pl/bach/register/user/" method="POST">
+<form enctype="multipart/form-data" name="formularz" id="form" action="http://edi.iem.pw.edu.pl/bach/register/user/"
+      method="POST">
     <h2>Wprowadz swoje dane- u mnie będą bezpieczne </h2>
     <h4>Imie</h4>
     <input type="text" name="firstname" id="firstname"/>
 
+    <p id="firstnameInfo" class="info"></p>
+
     <h4>Nazwisko</h4>
     <input type="text" name="lastname" id="lastname"/>
+    <p id="lastnameInfo" class="info"></p>
 
     <h4>Login</h4>
     <input type="text" name="login" id="login"/>
 
+    <p id="loginInfo" class="info"></p>
+
     <div id="passwdbox">
         <h4>Haslo</h4>
         <input type="password" name="password" id="password"/>
+
+        <p id="passwordInfo" class="info"></p>
     </div>
     <div id="passwdrpbox">
         <h4>Powtórz haslo</h4>
         <input type="password" id="password-rep"/>
+
+        <p id="password-repInfo" class="info"></p>
     </div>
 
     <h4>Data urodzenia</h4>
     <input type="date" name="birthdate" id="date">
 
+    <p id="dateInfo" class="info"></p>
+
     <h4>PESEL</h4>
     <input type="text" name="pesel" id="pesel"/>
+
+    <p id="peselInfo" class="info"></p>
 
     <div id="sexBox">
         <h4>Płeć</h4>
         <input type="radio" name="sex" id="sex1" value="male"> Mężczyzna
+        <p id="sex1Info" class="info"></p>
         <input type="radio" name="sex" id="sex2" value="female"> Kobieta
+        <p id="sex2Info" class="info"></p>
     </div>
     <h4>Zdjęcie</h4>
     <input type="file" name="photo" id="photo"/>
+
+    <p id="fileInfo" class="info"></p>
 
 
     <button type="submit" name="buton" value="Submit">Wyślij</button>

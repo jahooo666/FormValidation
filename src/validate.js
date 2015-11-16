@@ -1,9 +1,10 @@
 function isEmpty(element) {
     if (element.value != '') {
-        element.style.backgroundColor = "#FFFFFF"
+        element.style.backgroundColor = "#FFFFFF";
+        setInfo(element,"");
         return false;
     } else {
-        //alert("To pole musi być wypełnione!");
+       setInfo(element,"To pole nie może być puste");
         element.style.backgroundColor = "#E52B50";
         element.onkeypress = function () {
             isEmpty(element);
@@ -12,25 +13,41 @@ function isEmpty(element) {
     }
 }
 
+function setInfo(element, text){
+    var infoId = element.id + "Info";
+    var info = document.getElementById(infoId);
+    info.innerHTML = text;
+     element.style.backgroundColor = "#E52B50";
+    info.style.color = "#44FF44";
+}
+
+function setInfoOk(element, text){
+        var infoId = element.id + "Info";
+        var info = document.getElementById(infoId);
+        info.innerHTML = text;
+        element.style.backgroundColor = "#44FF44";
+        info.style.color = "#44FF44";
+}
+
 function checkPasswd(element) {
     var str = element.value;
     if (str.length < 6) {
-        alert("haslo jest za krótkie");
+        setInfo(element,"Hasło jest za krótkie");
         return ("too short");
     } else if (str.length > 50) {
-        alert("hasło jest za długie");
+       setInfo(element,"hasło jest za długie");
         return ("too long");
     } else if (str.search(/\d/) == -1) {
-        alert("W haśle powinny być liczby");
+       setInfo(element,"W haśle powinny być liczby");
         return ("no num");
     } else if (str.search(/[a-zA-Z]/) == -1) {
-        alert("W haśle powinny być litery");
+       setInfo(element,"W haśle powinny być litery");
         return ("no letter");
     } else if (str.search(/[^a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\_\+\.\,\;\:]/) != -1) {
-        alert("Niedozwolony znak");
+       setInfo(element,"Niedozwolony znak");
         return ("bad char");
     }
-    alert("Hasło ok!!");
+   setInfoOK(element,"Hasło ok!!");
     return ("ok");
 }
 
@@ -42,10 +59,6 @@ function setSex(plec) {
         man.setAttribute("checked", "checked");
         woman.removeAttribute("checked");
     }
-}
-
-function isPeselCorrect(){
-
 }
 
 function isWoman(element) {
@@ -64,11 +77,6 @@ function isWomanFromPesel(element) {
     } else {
         setSex("kobieta");
     }
-}
-
-function setErrorText(element, text) {
-    parent = element.parentElement;
-    parent.innerHTML
 }
 
 function getDateFromPesel(element) {
@@ -91,8 +99,23 @@ function getDateFromPesel(element) {
     var fulldate = year + "-" + month + "-" + day;
     birthdate.value = fulldate;
     //alert(year + "-" + month + "-" + day);
-    //TODO: zrobić
 }
+
+function checkIfLoginAvailable(element){
+	if (element.value.length <= 6) {
+		alert("Login musi mieć więcej niż 6 znaków!");
+		//element.style.backgroundColor = "#FFFF00";
+	} else {
+		//element.style.backgroundColor = "#FFFFFF";
+		var url = 'http://edi.iem.pw.edu.pl/bach/register/check/'+ element.value;
+
+
+
+	}
+	var loginSend = toCheckUrl + element.value;
+	loginConnection();
+}
+
 
 function setPeselFromDate(element) {
     var year = element.value.substr(2, 2);
@@ -113,22 +136,17 @@ function setPeselFromDate(element) {
     pesel.value = peselStart + rest;
 }
 
-function isComplicated(element) {
-    if (element.value.length < 7) {
-        //	alert("Za krótkie haslo!");
-    }
-}
-
 function arePasswdsTheSame(element, element2) {
     if (element.value != element2.value) {
-        alert("hasla są różne!");
+       setInfo(element,"hasla są różne!");
     }
 }
 
 function isLongEnoughtPesel(element) {
     if (element.value.length != 11) {
+        setInfo(element,"Zła długość peselu");
     }
-    //	alert("zla dlugosc peselu");
+
 }
 
 var firstname = document.getElementById('firstname');
@@ -194,6 +212,7 @@ pesel.onblur = function () {
 birthdate.onblur = function () {
     isEmpty(this);
     setPeselFromDate(this);
+
 };
 
 photo.onblur = function () {
@@ -201,11 +220,10 @@ photo.onblur = function () {
 };
 
 sex1.onblur = function () {
-   // isPeselCorrect();
 };
 
 sex2.onblur = function () {
-   // isPeselCorrect();
+
 };
 
 
