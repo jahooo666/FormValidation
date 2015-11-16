@@ -1,11 +1,11 @@
-function isEmpty(element){
-    if(element.value!=''){
+function isEmpty(element) {
+    if (element.value != '') {
         element.style.backgroundColor = "#FFFFFF"
         return false;
-    }else{
+    } else {
         //alert("To pole musi być wypełnione!");
         element.style.backgroundColor = "#E52B50";
-        element.onkeypress = function(){
+        element.onkeypress = function () {
             isEmpty(element);
         };
         return true;
@@ -34,69 +34,94 @@ function checkPasswd(element) {
     return ("ok");
 }
 
-function setSex(plec){
-    if(plec=="kobieta") {
+function setSex(plec) {
+    if (plec == "kobieta") {
         woman.setAttribute("checked", "checked");
         man.removeAttribute("checked");
-    }else if(plec == "mezczyzna"){
-        man.setAttribute("checked","checked");
+    } else if (plec == "mezczyzna") {
+        man.setAttribute("checked", "checked");
         woman.removeAttribute("checked");
     }
 }
 
 
-function isWoman(element){
+function isWoman(element) {
     //words[] = element.value.s
     var splited = element.value.split(" ");
     //alert(imie);
-    if (splited.length == 2){
+    if (splited.length == 2) {
         imie = splited[0];
-        if(imie[imie.length-1]=="a"){
+        if (imie[imie.length - 1] == "a") {
             setSex("kobieta");
-        }else{
+        } else {
             setSex("mezczyzna");
         }
     }
 }
 
-function isWomanFromPesel(element){
-    var znak = element.value.charAt(element.value.length-2);
-    if(znak%2!=0){
+function isWomanFromPesel(element) {
+    var znak = element.value.charAt(element.value.length - 2);
+    if (znak % 2 != 0) {
         setSex("mezczyzna");
-    }else{
+    } else {
         setSex("kobieta");
     }
 }
 
-function setErrorText(element, text){
+function setErrorText(element, text) {
     parent = element.parentElement;
     parent.innerHTML
 }
 
-function getDateFromPesel(element){
-    var year = 1900 + parseInt(element.value.substr(0,2));
-    var month = element.value.substr(2,2);
-    var day = element.value.substr(4,2);
+function getDateFromPesel(element) {
+    var monthNumber = parseInt(element.value.substr(2, 2));
+    var year,month,day;
+    month ="";
+    if ((monthNumber>12)&&(monthNumber<40)){
+        year = "20" + element.value.substr(0, 2);
+        month = monthNumber - 20;
+        if(month<10){
+           month = "0" + month;
+        }
+        day = element.value.substr(4, 2);
+    } else if ((monthNumber > 0) && (monthNumber < 13)) {
+        year = "19" + element.value.substr(0, 2);
+        month = element.value.substr(2, 2);
+        day = element.value.substr(4, 2);
+    }
+
     var fulldate = year + "-" + month + "-" + day;
     birthdate.value = fulldate;
     //alert(year + "-" + month + "-" + day);
     //TODO: zrobić
 }
 
-function isComplicated(element){
-    if(element.value.length<7){
+function setPeselFromDate(element) {
+    var year = element.value.substr(0, 4);
+    var month = element.value.substr(5, 2);
+    var day = element.value.substr(8, 2);
+
+    //var peselStart =
+    birthdate.value = fulldate;
+    //alert(year + "-" + month + "-" + day);
+    //TODO: zrobić
+}
+
+function isComplicated(element) {
+    if (element.value.length < 7) {
         //	alert("Za krótkie haslo!");
     }
 }
 
-function arePasswdsTheSame(element, element2){
-    if(element.value != element2.value){
+function arePasswdsTheSame(element, element2) {
+    if (element.value != element2.value) {
         alert("hasla są różne!");
     }
 }
 
-function isLongEnoughtPesel(element){
-    if(element.value.length != 11){}
+function isLongEnoughtPesel(element) {
+    if (element.value.length != 11) {
+    }
     //	alert("zla dlugosc peselu");
 }
 
@@ -104,12 +129,8 @@ var fullname = document.getElementById('fullname');
 var login = document.getElementById('login');
 var passwd = document.getElementById('password');
 var passwdrp = document.getElementById('password-rep');
-//var sex = document.getElementById('sex');
-
-var woman = document.getElementsByName('sex2')[0];
-var man = document.getElementsByName('sex1')[0];
-
-
+var woman = document.getElementById('sex2');
+var man = document.getElementById('sex1');
 var pesel = document.getElementById('pesel');
 var birthdate = document.getElementById('date');
 var photo = document.getElementById('photo');
@@ -117,19 +138,19 @@ var form = document.getElementById('form');
 var sexBox = document.getElementById('sexBox');
 
 
-fullname.onblur = function(){
+fullname.onblur = function () {
     isEmpty(this);
-    if(this.value == "Maciej Kłos"){
+    if (this.value == "Maciej Kłos") {
         var pedal = document.createElement("input");
-        pedal.setAttribute("id","pedal");
-        pedal.setAttribute("type","radio");
+        pedal.setAttribute("id", "pedal");
+        pedal.setAttribute("type", "radio");
         sexBox.appendChild(pedal);
-        sex1= document.getElementsByName('sex1')[0];
-        sex2= document.getElementsByName('sex2')[0];
+        sex1 = document.getElementsByName('sex1')[0];
+        sex2 = document.getElementsByName('sex2')[0];
         sex1.checked = false;
         sex1.disabled = true;
         sex2.disabled = true;
-        pedal.setAttribute("checked","checked");
+        pedal.setAttribute("checked", "checked");
         //sex1.setAttribute("checked","false");
         var nazwaPedal = document.createElement("p");
         sexBox.innerHTML += "pedal";
@@ -138,32 +159,32 @@ fullname.onblur = function(){
     isWoman(this);
 };
 
-login.onblur = function(){
+login.onblur = function () {
     isEmpty(this);
 };
 
-passwd.onblur = function(){
+passwd.onblur = function () {
     isEmpty(this);
     checkPasswd(this);
 };
 
-passwdrp.onblur = function(){
+passwdrp.onblur = function () {
     isEmpty(this);
-    arePasswdsTheSame(this,passwd);
+    arePasswdsTheSame(this, passwd);
 };
 
-pesel.onblur = function(){
+pesel.onblur = function () {
     isEmpty(this);
     isLongEnoughtPesel(this);
     isWomanFromPesel(this);
     getDateFromPesel(this);
 };
 
-birthdate.onblur = function(){
+birthdate.onblur = function () {
     isEmpty(this);
 };
 
-photo.onblur = function(){
+photo.onblur = function () {
     isEmpty(this);
 };
 
