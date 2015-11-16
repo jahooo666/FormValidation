@@ -75,13 +75,13 @@ function setErrorText(element, text) {
 
 function getDateFromPesel(element) {
     var monthNumber = parseInt(element.value.substr(2, 2));
-    var year,month,day;
-    month ="";
-    if ((monthNumber>12)&&(monthNumber<40)){
+    var year, month, day;
+    month = "";
+    if ((monthNumber > 12) && (monthNumber < 40)) {
         year = "20" + element.value.substr(0, 2);
         month = monthNumber - 20;
-        if(month<10){
-           month = "0" + month;
+        if (month < 10) {
+            month = "0" + month;
         }
         day = element.value.substr(4, 2);
     } else if ((monthNumber > 0) && (monthNumber < 13)) {
@@ -97,14 +97,22 @@ function getDateFromPesel(element) {
 }
 
 function setPeselFromDate(element) {
-    var year = element.value.substr(0, 4);
+    var year = element.value.substr(2, 2);
     var month = element.value.substr(5, 2);
     var day = element.value.substr(8, 2);
 
-    //var peselStart =
-    birthdate.value = fulldate;
-    //alert(year + "-" + month + "-" + day);
-    //TODO: zrobić
+    if ((parseInt(element.value.substr(0, 4)) > 1999)) {
+        month = parseInt(month) + 20;
+    }
+    var peselStart = year + month + day;
+
+    var len = pesel.value.length;
+    var dif = len - 6;
+    var rest = "";
+    if (dif > 0) {
+        rest = pesel.value.substr(6, dif);
+    }
+    pesel.value = peselStart + rest;
 }
 
 function isComplicated(element) {
@@ -182,10 +190,20 @@ pesel.onblur = function () {
 
 birthdate.onblur = function () {
     isEmpty(this);
+    setPeselFromDate(this);
 };
 
 photo.onblur = function () {
     isEmpty(this);
 };
+
+sex1.onblur = function () {
+    isPeselCorrect();
+};
+
+sex2.onblur = function () {
+    isPeselCorrect();
+};
+
 
 
