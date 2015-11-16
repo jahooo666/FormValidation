@@ -1,11 +1,9 @@
 function isEmpty(element) {
     if (element.value != '') {
-        element.style.backgroundColor = "#FFFFFF";
-        setInfo(element,"");
+       setInfoOk(element,"");
         return false;
     } else {
        setInfo(element,"To pole nie może być puste");
-        element.style.backgroundColor = "#E52B50";
         element.onkeypress = function () {
             isEmpty(element);
         };
@@ -18,7 +16,7 @@ function setInfo(element, text){
     var info = document.getElementById(infoId);
     info.innerHTML = text;
      element.style.backgroundColor = "#E52B50";
-    info.style.color = "#44FF44";
+    info.style.color = "#E52B50";
 }
 
 function setInfoOk(element, text){
@@ -26,7 +24,7 @@ function setInfoOk(element, text){
         var info = document.getElementById(infoId);
         info.innerHTML = text;
         element.style.backgroundColor = "#44FF44";
-        info.style.color = "#44FF44";
+        info.style.color = "#00AA00";
 }
 
 function checkPasswd(element) {
@@ -103,17 +101,24 @@ function getDateFromPesel(element) {
 
 function checkIfLoginAvailable(element){
 	if (element.value.length <= 6) {
-		alert("Login musi mieć więcej niż 6 znaków!");
-		//element.style.backgroundColor = "#FFFF00";
+		setInfo(element,"Login musi mieć więcej niż 6 znaków!");
 	} else {
-		//element.style.backgroundColor = "#FFFFFF";
-		var url = 'http://edi.iem.pw.edu.pl/bach/register/check/'+ element.value;
-
-
-
-	}
-	var loginSend = toCheckUrl + element.value;
-	loginConnection();
+		var url = 'http://edi.iem.pw.edu.pl/bach/register/check/'+ login.value;
+        		$.ajax(url, { mimeType: 'application/json; charset=UTF-8', success: function(responseText, statusText, jqXHR)
+        			{
+        				setInfoOk(element,"Sprawdzam dostępność loginu...");
+        				var interval = setInterval(function()
+        					{
+        						if((responseText[login.value] == true)){
+        							setInfo(element,"Ten login jest zajęty. Wybierz inny");
+        						}else{
+        							setInfoOk(element,"Ten login jest dostępny.");
+        							clearInterval(interval);
+        						}
+        					}, 2000);
+        			}
+        		});
+    }
 }
 
 
@@ -139,6 +144,8 @@ function setPeselFromDate(element) {
 function arePasswdsTheSame(element, element2) {
     if (element.value != element2.value) {
        setInfo(element,"hasla są różne!");
+    }else{
+        setInfoOk(element,"Hasła są takie same- sukces")
     }
 }
 
@@ -190,6 +197,7 @@ lastname.onblur = function () {
 
 login.onblur = function () {
     isEmpty(this);
+    checkIfLoginAvailable(this);
 };
 
 passwd.onblur = function () {
@@ -203,7 +211,7 @@ passwdrp.onblur = function () {
 };
 
 pesel.onblur = function () {
-    isEmpty(this);
+    //isEmpty(this);
     isLongEnoughtPesel(this);
     isWomanFromPesel(this);
     getDateFromPesel(this);
