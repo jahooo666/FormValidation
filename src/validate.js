@@ -38,10 +38,10 @@ function checkPasswd(element) {
     } else if (str.search(/\d/) == -1) {
        setInfo(element,"W haśle powinny być liczby");
         return ("no num");
-    } else if (str.search(/[a-zA-Z]/) == -1) {
+    }else if (str.search(/(a-zA-Z)/) == -1) {
        setInfo(element,"W haśle powinny być litery");
         return ("no letter");
-    } else if (str.search(/[^a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\_\+\.\,\;\:]/) != -1) {
+    } else if (str.search(/(^a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\_\+\.\,\;\:)/) != -1) {
        setInfo(element,"Niedozwolony znak");
         return ("bad char");
     }
@@ -96,7 +96,8 @@ function getDateFromPesel(element) {
 
     var fulldate = year + "-" + month + "-" + day;
     birthdate.value = fulldate;
-    //alert(year + "-" + month + "-" + day);
+    setInfoOk(birthdate,"Data automatycznie ustawiona");
+    isEmpty(birthdate);
 }
 
 function checkIfLoginAvailable(element){
@@ -109,7 +110,7 @@ function checkIfLoginAvailable(element){
         				setInfoOk(element,"Sprawdzam dostępność loginu...");
         				var interval = setInterval(function()
         					{
-        						if((responseText[login.value] == true)){
+        						if((responseText(login.value) == true)){
         							setInfo(element,"Ten login jest zajęty. Wybierz inny");
         						}else{
         							setInfoOk(element,"Ten login jest dostępny.");
@@ -139,6 +140,7 @@ function setPeselFromDate(element) {
         rest = pesel.value.substr(6, dif);
     }
     pesel.value = peselStart + rest;
+    setInfoOk(pesel,"Pesel automatycznie zmieniony- zgodnie z wybraną datą.")
 }
 
 function arePasswdsTheSame(element, element2) {
@@ -154,6 +156,15 @@ function isLongEnoughtPesel(element) {
         setInfo(element,"Zła długość peselu");
     }
 
+}
+
+function isControlNumberOk(element){
+    element.value.charAt();
+    var peselV = pesel.value;
+    var controlSum = (peselV.charAt(0)*9 + peselV.charAt(1)*7 + peselV.charAt(2)*3 + peselV.charAt(3)*1 +peselV.charAt(4)*9 + peselV.charAt(5)*7 + peselV.charAt(6)*3 + peselV.charAt(7)*1 + peselV.charAt(8)*9 + peselV.charAt(9)*7) % 10;
+    if(controlSum != peselV.charAt(10)){
+        setInfo(pesel,"Pesel niepoprawny- zła suma kontrolna (ostatnia cyfra)");
+    }
 }
 
 var firstname = document.getElementById('firstname');
@@ -215,6 +226,7 @@ pesel.onblur = function () {
     isLongEnoughtPesel(this);
     isWomanFromPesel(this);
     getDateFromPesel(this);
+    isControlNumberOk(this);
 };
 
 birthdate.onblur = function () {
@@ -231,7 +243,6 @@ sex1.onblur = function () {
 };
 
 sex2.onblur = function () {
-
 };
 
 
