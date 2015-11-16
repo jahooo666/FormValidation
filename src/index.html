@@ -1,22 +1,24 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Moja super strona z formularzem i javascriptem</title>
-
+    <title>Jan Okraska- formularz</title>
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 </head>
 <body>
-<form enctype="multipart/form-data" id="form">
+<form enctype="multipart/form-data" name="formularz" id="form" action="http://edi.iem.pw.edu.pl/bach/register/user/" method="POST">
     <h2>Wprowadz swoje dane- u mnie będą bezpieczne </h2>
-    <h4>Imie i nazwisko</h4>
-    <input type="text" id="fullname"/>
+    <h4>Imie</h4>
+    <input type="text" name="firstname" id="firstname"/>
+
+    <h4>Nazwisko</h4>
+    <input type="text" name="lastname" id="lastname"/>
 
     <h4>Login</h4>
-    <input type="text" id="login"/>
+    <input type="text" name="login" id="login"/>
 
-    <!--zrobić określanie płci po imieniu -->
     <div id="passwdbox">
         <h4>Haslo</h4>
-        <input type="password" id="password"/>
+        <input type="password" name="password" id="password"/>
     </div>
     <div id="passwdrpbox">
         <h4>Powtórz haslo</h4>
@@ -24,10 +26,10 @@
     </div>
 
     <h4>Data urodzenia</h4>
-    <input type="date" id="date">
+    <input type="date" name="birthdate" id="date">
 
     <h4>PESEL</h4>
-    <input type="text" id="pesel"/>
+    <input type="text" name="pesel" id="pesel"/>
 
     <div id="sexBox">
         <h4>Płeć</h4>
@@ -35,10 +37,10 @@
         <input type="radio" name="sex" id="sex2" value="female"> Kobieta
     </div>
     <h4>Zdjęcie</h4>
-    <input type="file" id="photo"/>
+    <input type="file" name="photo" id="photo"/>
 
 
-    <input type="submit" value="Submit">
+    <button type="submit" name="buton" value="Submit">Wyślij</button>
 
 </form>
 

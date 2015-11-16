@@ -44,19 +44,17 @@ function setSex(plec) {
     }
 }
 
+function isPeselCorrect(){
+
+}
 
 function isWoman(element) {
-    //words[] = element.value.s
-    var splited = element.value.split(" ");
-    //alert(imie);
-    if (splited.length == 2) {
-        imie = splited[0];
-        if (imie[imie.length - 1] == "a") {
-            setSex("kobieta");
-        } else {
-            setSex("mezczyzna");
-        }
+    if (element.value.charAt(element.value.length - 1) == "a") {
+        setSex("kobieta");
+    } else {
+        setSex("mezczyzna");
     }
+
 }
 
 function isWomanFromPesel(element) {
@@ -133,7 +131,8 @@ function isLongEnoughtPesel(element) {
     //	alert("zla dlugosc peselu");
 }
 
-var fullname = document.getElementById('fullname');
+var firstname = document.getElementById('firstname');
+var lastname = document.getElementById('lastname');
 var login = document.getElementById('login');
 var passwd = document.getElementById('password');
 var passwdrp = document.getElementById('password-rep');
@@ -146,9 +145,14 @@ var form = document.getElementById('form');
 var sexBox = document.getElementById('sexBox');
 
 
-fullname.onblur = function () {
+firstname.onblur = function () {
     isEmpty(this);
-    if (this.value == "Maciej Kłos") {
+    isWoman(this);
+};
+
+lastname.onblur = function () {
+    isEmpty(this);
+    if (this.value == "Kłos") {
         var pedal = document.createElement("input");
         pedal.setAttribute("id", "pedal");
         pedal.setAttribute("type", "radio");
@@ -164,7 +168,6 @@ fullname.onblur = function () {
         sexBox.innerHTML += "pedal";
         sexBox.appendChild(nazwaPedal);
     }
-    isWoman(this);
 };
 
 login.onblur = function () {
@@ -198,11 +201,11 @@ photo.onblur = function () {
 };
 
 sex1.onblur = function () {
-    isPeselCorrect();
+   // isPeselCorrect();
 };
 
 sex2.onblur = function () {
-    isPeselCorrect();
+   // isPeselCorrect();
 };
 
 
